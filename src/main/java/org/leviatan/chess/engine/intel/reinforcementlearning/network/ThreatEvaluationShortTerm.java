@@ -20,6 +20,8 @@ import org.leviatan.chess.tools.platform.AppLogger;
  */
 public class ThreatEvaluationShortTerm implements ThreatEvaluation {
 
+    private static final double ATTENUATION_FACTOR = 0.01;
+
     @Override
     public List<TableroAndThreat> evaluateThreatsOfPartida(final Partida partida) {
 
@@ -72,6 +74,7 @@ public class ThreatEvaluationShortTerm implements ThreatEvaluation {
         final double gananciaAcumulada = movimientoYConsecuencias.getGananciaAcumulada();
 
         double threat = gananciaAcumulada / TipoFicha.REY.getValor();
+        threat = threat * ATTENUATION_FACTOR;
         threat = threat > 1 ? 1 : threat;
 
         return threat;

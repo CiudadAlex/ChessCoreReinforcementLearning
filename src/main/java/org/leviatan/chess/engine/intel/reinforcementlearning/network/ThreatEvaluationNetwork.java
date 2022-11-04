@@ -120,7 +120,7 @@ public class ThreatEvaluationNetwork {
         }
 
         final MultiLayerConfiguration conf = listBuilder.layer(ARRAY_SIZE_INNER_LAYERS.size(),
-                new OutputLayer.Builder(LossFunction.NEGATIVELOGLIKELIHOOD).weightInit(WeightInit.XAVIER).activation(Activation.SOFTMAX)
+                new OutputLayer.Builder(LossFunction.NEGATIVELOGLIKELIHOOD).weightInit(WeightInit.XAVIER).activation(Activation.LEAKYRELU)
                         .weightInit(WeightInit.XAVIER).nIn(numInputNextLayer).nOut(numOutputs).build())
                 .pretrain(false).backprop(true).build();
 
@@ -129,7 +129,7 @@ public class ThreatEvaluationNetwork {
 
     private ListBuilder addHiddenLayer(final int index, final ListBuilder listBuilder, final int numImput, final int numOutput) {
 
-        final Layer layer = new DenseLayer.Builder().nIn(numImput).nOut(numOutput).weightInit(WeightInit.XAVIER).activation(Activation.RELU)
+        final Layer layer = new DenseLayer.Builder().nIn(numImput).nOut(numOutput).weightInit(WeightInit.XAVIER).activation(Activation.SIGMOID)
                 .build();
         return listBuilder.layer(index, layer);
     }
